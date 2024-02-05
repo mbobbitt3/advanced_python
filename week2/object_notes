@@ -1,0 +1,14 @@
+everythign is a first class citizen in python
+datatypes in python follows a object including ints, lists, etc.
+inheritance allows you build a hierarchy of objects, they inherit desriptions and functions from each other
+
+once a class has been defined you can make instances of the of the class
+	a dining table is an instance of a table classs
+	instances start with all tge defined values and behaviors of the blueprint. 
+
+a class is mostly constructed in two parts:
+	A declaration section
+	implementation section which contains the functions themselves. 
+
+when creating an object you are creating an instantiation of a class.
+
