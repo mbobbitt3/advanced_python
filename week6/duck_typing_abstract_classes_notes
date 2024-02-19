@@ -1,0 +1,55 @@
+duck typing:
+	duck typing means code with accept any object that has a particular method
+	
+	it is a lazy form of evaluation
+	
+	only cares of object has interface that supports what you're asking it to do'
+	duck typing in python does not care about type 
+	
+	if a class has method called quack then we we can act as if object is a duck
+	whether it is or not
+
+	
+duck typing example:
+	class Duck:
+		def quack(self):
+			return 'quack'
+	class person:
+		def quack(self):
+			return "im quacking like a duck"
+	def in_forest(malard):
+		malard.quack()
+	
+abstract inheritance:
+	if a class inherits from a class with an abstract method the child class needs
+	to have a definition for the abstract method from the parent 
+
+	abstract methods are defined with the @abstractmethod tag
+
+abstract class example:
+
+class Flyer(ABC):
+	@abstractmethod
+	def fly(self):
+		pass
+	class Bird(Flyer):
+		def fly(self):
+			return "flap flap"
+	class Airplane(Flyer):
+		def fly(self):
+			return "zoom zoom"
+pigeon = Bird()
+boeing = Airplane()
+print(pigeon.fly())
+print(boeing.fly())
+
+abstract clas example 2:
+class parent(ABC):
+	@abc.abstractproperty
+	def geeks(self):
+		return "parent class"
+
+class child(parent):
+	@property
+	def geeks(self):
+		return "child class"
