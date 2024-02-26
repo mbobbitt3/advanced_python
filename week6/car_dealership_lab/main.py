@@ -27,13 +27,13 @@ class Menu:
 		while True:
 			self.show_menu()
 			option = input("Enter a option: ")
-			act = self.choices.get(option)
+			act = self.options.get(option)
 			if act:
 				act()
 			else:
 				print("[0] is not a valid input".format(choice))
 
-	def show_inventory(self)
+	def show_inventory(self):
 		for i in self.vehicles:
 			print(i)
 			
@@ -43,8 +43,8 @@ class Menu:
 				int(input("Enter miles on vehcile: ")),
 				input("Enter make of vehicle: "),
 				input("Enter Model of vehicle: "),
-				int(input("Enter year of vehicle: "),
-				int(input("Enter cost of vehicle: ")
+				int(input("Enter year of vehicle: ")),
+				int(input("Enter cost of vehicle: "))
 			)
 		)
 
@@ -54,8 +54,8 @@ class Menu:
 				int(input("Enter miles on vehcile: ")),
 				input("Enter make of vehicle: "),
 				input("Enter Model of vehicle: "),
-				int(input("Enter year of vehicle: "),
-				int(input("Enter cost of vehicle: ")
+				int(input("Enter year of vehicle: ")),
+				int(input("Enter cost of vehicle: "))
 			)
 		)
 	def add_moto(self):
@@ -64,7 +64,12 @@ class Menu:
 				int(input("Enter miles on vehcile: ")),
 				input("Enter make of vehicle: "),
 				input("Enter Model of vehicle: "),
-				int(input("Enter year of vehicle: "),
-				int(input("Enter cost of vehicle: ")
+				int(input("Enter year of vehicle: ")),
+				int(input("Enter cost of vehicle: "))
 			)
 		)
+	def quit(self):
+		"""this exits the program"""
+		sys.exit(0)
+if __name__ == '__main__':
+	Menu().inventory_system()	
