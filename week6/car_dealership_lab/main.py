@@ -1,6 +1,23 @@
 from vehicle_types import Car, Motorcycle, Truck
 from vehicle import Vehicle
 import sys
+"""
+menu internface for adding vehicle to car dealership
+Author:Matt Bobbitt
+Class: CSI-260-01
+Assignment: Week 4 Lab
+Due Date: February 26, 2024 11:59 PM
+
+Certification of Authenticity:
+I certify that this is entirely my own work, except where I have given
+fully-documented references to the work of others. I understand the definition
+and consequences of plagiarism and acknowledge that the assessor of this
+assignment may, for the purpose of assessing this assignment:
+- Reproduce this assignment and provide a copy to another member of academic
+- staff; and/or Communicate a copy of this assignment to a plagiarism checking
+- service (which may then retain a copy of this assignment on its database for
+- the purpose of future plagiarism checking)
+"""
 class Menu:
 	"""display menu and setup menu option"""
 	def __init__(self):
@@ -13,6 +30,7 @@ class Menu:
 			"5":self.quit
 		}
 	def show_menu(self):
+		"""this method prints the menu"""
 		print("""\
 			Menu:
 
@@ -35,6 +53,7 @@ class Menu:
 				print("[0] is not a valid input".format(choice))
 
 	def show_inventory(self):
+		"""prints inventory list"""
 		for i in self.vehicles:
 			print(i)
 			
