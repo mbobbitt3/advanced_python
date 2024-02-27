@@ -1,5 +1,6 @@
 from vehicle_types import Car, Motorcycle, Truck
 from vehicle import Vehicle
+import sys
 class Menu:
 	"""display menu and setup menu option"""
 	def __init__(self):
@@ -38,6 +39,7 @@ class Menu:
 			print(i)
 			
 	def add_car(self):
+		"""this method is used to add cars to vehicles inventory"""
 		self.vehicles.append(
 			Car(
 				int(input("Enter miles on vehcile: ")),
@@ -49,6 +51,7 @@ class Menu:
 		)
 
 	def add_truck(self):
+		"""this method is used to add trucks to vehicles inventory"""
 		self.vehicles.append(
 			Truck(
 				int(input("Enter miles on vehcile: ")),
@@ -59,6 +62,7 @@ class Menu:
 			)
 		)
 	def add_moto(self):
+		"""this method is used to add motorcycles to vehicles inventory"""
 		self.vehicles.append(
 			Motorcycle(
 				int(input("Enter miles on vehcile: ")),
