@@ -1,0 +1,45 @@
+mainly focused defining and using objects
+
+what is a class 
+what is a instance
+what is pep8
+where to put docstrings
+UML
+what is a member
+what is a associ relation
+composition relationship
+staticmethods
+instancemethods
+classmethods 
+differences and how to call them
+instance varibales and class variables and how to call them
+how to create instances form a object from a class
+how to set attributes during init
+str method, repr method, __init__ method
+repr method returns string used for machine
+what is a module
+how to implement
+how to bring something in from module
+what is inheritance?
+what kind of relationship is inheritance
+compositional aggregation
+how to call a superclass
+what is a superclass?
+what is an abstract class?
+why is abs class useful?
+what happens when you declare a abs method in abs class when you make them
+	concrete?
+private, public, protected variables.
+definiton of duck typing
+how to do inheritance?
+order in which methods and atributes are inherited? (left to right)
+some little exception
+look before you leap and ask forgiveness
+try except else and finally
+
+build objects
+how to create custom exception
+`
+
+
+

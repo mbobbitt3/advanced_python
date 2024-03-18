@@ -1,0 +1,33 @@
+when writing programs to handle error try except is the msot common method for
+handling errors in python
+
+there are two methods of exception handling in python
+	Exception handling
+	assertions 
+
+an exceptiion is an event that occurs during exeuction to disrupt the flow of
+instructions
+
+if you have suspicious code you should place in try block and then include an
+exception block followed by a block of code to handle error
+
+a single try cna have multiple exceptions
+you cna have a generic except clause
+after the except clause you can have an else which is for if the code raises no
+exceptions
+
+instead of except for a try you can use a finally block which is always run. 
+
+the user can define their own exceptions
+you can derive classes from the standard built in exceptions
+
+example a new exception called network error derived from runtime error
+
+class Networkerror(RuntimeError):
+	def __init__(self, arg):
+		self.args  = arg
+
+try:
+	raise Networkerror("bad hostname")
+except Networkerror, e:
+	print(e.args())

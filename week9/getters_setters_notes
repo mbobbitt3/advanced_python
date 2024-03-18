@@ -1,0 +1,11 @@
+
+variables set in init can be changed we need to protect certain variables
+we use getters to take init params and return a value we want so it can't be
+	changed
+decorators using @property 
+
+we use three methods for a property:
+	getter - to access the value of a attribute
+	setter - set bvalue of attribute
+	deleter - delete the instance attrib
+
