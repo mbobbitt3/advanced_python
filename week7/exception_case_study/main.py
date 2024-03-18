@@ -6,11 +6,12 @@ with the assignment
 import auth
 
 try:
-    auth.authenticator.add_user("joe", "aaawwwww")
+    auth.authenticator.add_user("joe", "aaawwwww1")
     print ("you are ok")
 except auth.PasswordTooShort:
     print('password is too short')
 except auth.PasswordMissingNumber:
     print("password missing a number")
-
+except auth.PasswordMissingSpecialChar:
+    print("password missing a Special CHar")
 

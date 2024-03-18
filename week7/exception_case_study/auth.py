@@ -25,7 +25,7 @@ class AuthException(Exception):
 		super().__init__(username)
 		self.username = username
 		self.user = user
-
+		
 class UsernameAlreadyExists(AuthException):
 	pass
 
@@ -50,7 +50,7 @@ class NotPermittedError(AuthException):
 class PasswordMissingNumber(AuthException):
 	pass	
 class PasswordMissingSpecialChar(AuthException):
-	pass	
+	pass
 class Authenticator:
 	def __init__(self):
 		'''Construct an authenticator to manage
@@ -74,9 +74,11 @@ class Authenticator:
 		s_count = 0
 		for c in password:
 			if c in s_char:
+				s_count += 1
 				break
-			else:
-				raise PasswordMissingSpecialChar(password)
+		print(s_count)
+		if s_count == 0:
+			raise PasswordMissingSpecialChar(username)
 	def login(self, username, password):
 		try:
 			user = self.users[username]
