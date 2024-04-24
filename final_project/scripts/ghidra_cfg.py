@@ -4,6 +4,7 @@ from ghidra.util.graph import Vertex
 from ghidra.util.task import * 
 from ghidra.program.model.block import *
 from ghidra.program.model.symbol import * 
+import json
 from collections import OrderedDict
 class CFG:
 	def __init__(self, offset):
@@ -49,16 +50,17 @@ class CFG:
 				bb_succ = bb_dests.next()
 
 			bb = block_iter.next()
-		print(edge_map)
+
 		return edge_map
 
 	def save_cfg(self):
 		'''conjoin elements witin kwords to make file name and then write to json output for graphing'''
 		kwords = [self.prog.getName().replace('.','_'), self._func.getName()]
 		out_name = '_'.join(kwords)
-		try:	
-			with open(out_name, 'a') as fd:
-				json.dump
+		cfg_dict = self.gen_cfg_dict()
+		print(cfg_dict)
+		with open('cfg_json_files/' + out_name + '.json', 'w+') as fd:
+			json.dump(cfg_dict, fd)
 
 cfg = CFG(0x0010146b)
-cfg_dict = cfg.gen_cfg_dict()
+cfg.save_cfg()
