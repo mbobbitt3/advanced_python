@@ -8,9 +8,23 @@ from collections import OrderedDict
 class CFG:
 	def __init__(self):
 		"""f is going to be Ghidra function object which we want the CFG for"""
-		self.blocks= [] 
 		self.prog = getCurrentProgram()
-	
+		self._func = self.func_conv(offset)	
+	@property
+	def func(self):
+		return self._func
+
+	@func.setter
+	def func(self, offset):
+		self._func = self.func_conv(offset)
+
+	def func_conv(self, offset):
+		'''this method converts a raw hex address input into a Ghidra address object
+		and then gets the function object contianing that address''' 
+		f_addr = self.prog.getAddressFactory().getDefaultAddressSpace().getAddress(offset)			
+		f = self.prog.getFunctionManager().getFunctionContaining(f_addr)
+		return f
+
 	def get_basic_blocks(self, f):
 		dot_name = [self.prog.getName().replace('.','_'), f.getName()]
 		dot_name = '_'.join(dot_name)

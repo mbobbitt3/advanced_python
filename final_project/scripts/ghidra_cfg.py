@@ -37,10 +37,10 @@ class CFG:
 		f_name  = self._func.getName()
 		edge_map= OrderedDict()
 		edge_map[f_name] = []
-		bb = block_iter.next()
 		while block_iter.hasNext():
+			bb = block_iter.next()
 			bb_name = bb.getName()
-			bb_name = bb_name.strip('lAB_')
+			bb_name = bb_name.strip('LAB_')
 		#	block['instructions'] = self.prog.getListing().getInstructions(bb,True) 
 			bb_dests = bb.getDestinations(monitor)
 			bb_succ = bb_dests.next()
@@ -49,7 +49,6 @@ class CFG:
 				edge_map[f_name].append((bb_name, bb_succ_name))
 				bb_succ = bb_dests.next()
 
-			bb = block_iter.next()
 
 		return edge_map
 
