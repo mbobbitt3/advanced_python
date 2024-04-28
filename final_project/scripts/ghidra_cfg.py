@@ -18,10 +18,12 @@ class CFG:
 		self.block_iter = self.model.getCodeBlocksContaining(self._func.getBody(), monitor) 	
 	@property
 	def func(self):
+		'''simple getter for function'''
 		return self._func
 
 	@func.setter
 	def func(self, offset):
+		'''simple setter to get another functions CFG without instantiating new class'''
 		self._func = self.func_conv(offset)
 
 	def func_conv(self, offset):
@@ -57,7 +59,7 @@ class CFG:
 
 			bb = self.block_iter.next()
 
-		return edge_map
+		return self.edge_map
 
 	def save_cfg(self, cfg_dict):
 		'''conjoin elements witin kwords to make file name and then write to json output for graphing'''
