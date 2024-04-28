@@ -66,7 +66,7 @@ class CFG:
 		kwords = [self.prog.getName().replace('.','_'), self._func.getName()]
 		out_name = '_'.join(kwords)
 		print(cfg_dict)
-		with open('../cfg_json_files/' + out_name + '.json', 'w+') as fd:
+		with open('cfg_json_files/' + out_name + '.json', 'w+') as fd:
 			json.dump(cfg_dict, fd)
 	
 if __name__ == '__main__':

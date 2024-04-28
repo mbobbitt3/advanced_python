@@ -7,7 +7,7 @@ import random
 class Cfg_Graph:
 
 	def __init__(self):
-		with open("../cfg_json_files/sample_out_main.json", 'r') as fd:
+		with open("cfg_json_files/sample_out_main.json", 'r') as fd:
 			self.dict = json.load(fd)
 		self.cfg = self.dict['main']
 		self.graph = nx.DiGraph()
