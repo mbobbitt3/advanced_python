@@ -1,6 +1,9 @@
 import networkx as nx
 import json
 import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
+import seaborn as sns
+import random
 class Cfg_Graph:
 
 	def __init__(self):
@@ -8,6 +11,8 @@ class Cfg_Graph:
 			self.dict = json.load(fd)
 		self.cfg = self.dict['main']
 		self.graph = nx.DiGraph()
+		self.entry_node = self.dict['entry_node']
+		self.exit_node = self.dict['exit_node']
 		self.flow_types = [
 			"CALL_OVERRIDE_UNCONDITIONAL",
 			"CALL_TERMINATOR",
@@ -42,15 +47,25 @@ class Cfg_Graph:
 			"UNCONDITIONAL_JUMP",
 			"WRITE",
 			"WRITE_IND"
-	]
+		]
+		self.colors = sns.color_palette('husl', len(self.flow_types))
+		self.colors = [self.rgb_to_hex(color) for color in self.colors]
+		self.type_to_color = {flow_type: self.colors[i] for i, flow_type in enumerate(self.flow_types)}
+
+
+	def rgb_to_hex(self, rgb_tuple):
+		# Ensure RGB tuple values are in the range [0, 1]
+		if not all(0 <= v <= 1 for v in rgb_tuple):
+			raise ValueError("RGB values should be between 0 and 1")
+		
+		# Convert to hexadecimal
+		return mcolors.to_hex(rgb_tuple)
 
 	def create_graph(self):
 		# Loop through each key-value pair in the dictionary
-		#for node in self.cfg:
-		#	print(node)
 		for source, target, flow_type in self.cfg:
 			print(source, target, flow_type)
-			self.graph.add_edge(source, target, label= flow_type)  # Add edge from source to target
+			self.graph.add_edge(source, target, color = self.type_to_color[flow_type])	# Add edge from source to target
 		return self.graph
 	
 	def visualize_graph(self, graph):
@@ -58,19 +73,21 @@ class Cfg_Graph:
 		plt.figure(figsize=(100, 60))
 		pos = nx.nx_agraph.graphviz_layout(self.graph, prog='dot')	# Positions for all nodes
 		nx.draw(self.graph, pos, with_labels=True, node_size=700, node_color='lightblue', edge_color='gray', font_size=7)
-		edge_labels = nx.get_edge_attributes(self.graph, 'label')
-		nx.draw_networkx_edge_labels(self.graph, pos, edge_labels = edge_labels, font_size = 8, label_pos = 0.5, rotate=
-		False)
+		#edge_labels = nx.get_edge_attributes(self.graph, 'label')
+		edge_colors = [self.graph.edges[edge]['color'] for edge in self.graph.edges]
+		nx.draw_networkx_edges(self.graph, pos, edge_color = edge_colors)
+		nx.draw_networkx_nodes(self.graph, pos, nodelist = [self.entry_node], node_color = 'green', node_size = 800)
+		nx.draw_networkx_nodes(self.graph, pos, nodelist = [self.exit_node], node_color = 'red', node_size = 800)
+		used_types = set(edge_colors)
+		legend_elements = [
+			plt.Line2D([0], [0], color=self.type_to_color[flow_type], lw=4, label=flow_type)
+			for flow_type in self.type_to_color 
+			if self.type_to_color[flow_type] in used_types
+		]
+		plt.legend(handles = legend_elements, title = 'edge flow types', loc = 'upper left')
 		plt.title("Control Flow Graph")
 		plt.show()	# Display the graph
 	
-	'''
-	def make_graph(self):
-		self.graph.add_edges_from(self.cfg)
-		pos = nx.spring_layout(self.graph)
-		nx.draw_networkx(self.graph, with_labels = True)
-		plt.show()
-	'''
 cfg = Cfg_Graph()
 cfg_obj = cfg.create_graph()
 cfg.visualize_graph(cfg_obj)

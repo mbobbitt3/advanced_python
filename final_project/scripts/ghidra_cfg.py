@@ -7,11 +7,15 @@ import json
 from collections import OrderedDict
 class CFG:
 	def __init__(self, offset):
-		"""f is going to be Ghidra function object which we want the CFG for"""
-		self.cfg= OrderedDict() 
+		"""we inititaize an empty ordered dict to store the cfg into and then get a handle to the current program being
+		analayzed, then move onto converting our offset into a function object, then grab the basic blocks within the
+		progran, beofre finally getting a iterator over all the blocks within our functio of interest."""
+		self.edge_map = OrderedDict() 
 		self.prog = getCurrentProgram()
 		self._func = self.func_conv(offset)
-	
+		self.model = SimpleBlockModel(self.prog) 
+		self.monitor = ConsoleTaskMonitor()
+		self.block_iter = self.model.getCodeBlocksContaining(self._func.getBody(), monitor) 	
 	@property
 	def func(self):
 		return self._func
@@ -30,32 +34,28 @@ class CFG:
 	def gen_cfg_dict(self):
 		'''get all basic blocks and respective callee blocks within function and store as pairs representing (caller, callee)
 		into a dictionary that we will use to make the graph'''
-		monitor = ConsoleTaskMonitor()
-		model = SimpleBlockModel(self.prog) 
-		block_iter = model.getCodeBlocksContaining(self._func.getBody(), monitor) 	
-		f_name  = self._func.getName()
-		edge_map= OrderedDict()
-		edge_map[f_name] = []
-		bb = block_iter.next()
+		f_name = self._func.getName()
+		self.edge_map[f_name] = []
+		bb = self.block_iter.next()
 		entry_node = False 
-		while block_iter.hasNext():
+		while self.block_iter.hasNext():
 			bb_dests = bb.getDestinations(monitor)
 			while bb_dests.hasNext():
 				bb_name = bb.getName()
 				bb_name = bb_name.strip('LAB_')
 				bb_succ = bb_dests.next()
 				bb_succ_name = str(bb_succ).split('> ')[-1]
-				edge_map[f_name].append((bb_name, bb_succ_name, bb.getFlowType().toString()))
+				self.edge_map[f_name].append((bb_name, bb_succ_name, bb.getFlowType().toString()))
 				
 				if not entry_node:
 					entry_node = True
-					edge_map['entry_node'] = bb_name
+					self.edge_map['entry_node'] = bb_name
 				
-				edge_map['exit_node'] = bb_succ_name
+				self.edge_map['exit_node'] = bb_succ_name
 				
 				print(bb_name, bb_succ_name)
 
-			bb = block_iter.next()
+			bb = self.block_iter.next()
 
 		return edge_map
 
@@ -66,7 +66,8 @@ class CFG:
 		print(cfg_dict)
 		with open('../cfg_json_files/' + out_name + '.json', 'w+') as fd:
 			json.dump(cfg_dict, fd)
-		
-cfg = CFG(0x0010146b)
-cfg_dict = cfg.gen_cfg_dict()
-cfg.save_cfg(cfg_dict)
+	
+if __name__ == '__main__':
+	cfg = CFG(0x0010146b)
+	cfg_dict = cfg.gen_cfg_dict()
+	cfg.save_cfg(cfg_dict)
